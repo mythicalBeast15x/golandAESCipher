@@ -6,6 +6,7 @@ import (
 	"crypto/cipher"
 	"encoding/base64"
 	"fmt"
+	"time"
 )
 
 // Ramdom bytes
@@ -57,16 +58,28 @@ func Decrypt(text, MySecret string) (string, error) {
 }
 
 func main() {
-	fmt.Println("Enter the string to encrypt: ")
-	var StringToEncrypt string
-	fmt.Scanln(&StringToEncrypt)
+	//fmt.Println("Enter the string to encrypt: ")
+	//fmt.Scanln(&StringToEncrypt)
+
 	// To encrypt the StringToEncrypt
+
+	StringToEncrypt := "Test Data"
+	start := time.Now()
 	encText, err := Encrypt(StringToEncrypt, MySecret)
+	end := time.Now()
+	elapsed := end.Sub(start)
+	fmt.Println("Encryption Time:", elapsed)
+
 	if err != nil {
 		fmt.Println("error encrypting your classified text: ", err)
 	}
 	fmt.Println(encText)
+	start = time.Now()
 	decText, err := Decrypt(encText, MySecret)
+	end = time.Now()
+	elapsed = end.Sub(start)
+	fmt.Println("Decryption Time:", elapsed)
+
 	if err != nil {
 		fmt.Println("error decrypting your encrypted text: ", err)
 	}
